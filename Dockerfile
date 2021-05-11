@@ -11,7 +11,7 @@ VOLUME /tmp
 EXPOSE 8080
 
 # The application's jar file (when packaged)
-ARG JAR_FILE=target/concentrator-microservice-0.0.2-SNAPSHOT.jar
+ARG JAR_FILE=target/concentrator-microservice-0.0.3-SNAPSHOT.jar
 
 # Add the application's jar to the container
 ADD ${JAR_FILE} concentrator-microservice.jar
