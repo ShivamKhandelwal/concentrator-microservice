@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @RestController
@@ -29,30 +30,15 @@ public class ConcentratorService {
 
 	@RequestMapping (value = "/concentrator", method = RequestMethod.GET)
 	@CrossOrigin
-	public JSONArray concentrators (@RequestParam String city) {
+	public String concentrators (@RequestParam String city) {
 		
-	       //JSON parser object to parse read file
-           
-             JSONParser jsonParser = new JSONParser();
-             JSONArray concentratorList = null;
-             try (FileReader reader = new FileReader("concentrator.json"))
-             {
-             //Read JSON file
-             Object obj = jsonParser.parse(reader);
-             
-              concentratorList = (JSONArray) obj;
- 
-             } catch (FileNotFoundException e) {
-             e.printStackTrace();
-             } catch (IOException e) {
-             e.printStackTrace();
-             } catch (ParseException e) {
-             e.printStackTrace();
-             }
-            
-		
+	    final String uri = "http://api.covidtracking.com/v1/states/current.json";
 
+	    RestTemplate restTemplate = new RestTemplate();
+	    String result = restTemplate.getForObject(uri, String.class);
+
+	    System.out.println(result);
 		
-        return concentratorList;
+        return result;
 	}
 }
